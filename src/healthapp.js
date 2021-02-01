@@ -35,22 +35,74 @@
 // Well, no anwers here, but good fuel for your design brain in general. Cases are never 100% straight forward
 // For processing, if we decide so, the missing data could be assumed or interpolated there
 
-const userInfo = { name:"Mike", height:175, dob:new Date(1989, 0, 31), 
-                       maxBpm: 188, weightGoal:85.0, waistGoal:95.5, dateGoal:new Date(2021,6,1) };
+import React from 'react';
 
-const stats = [  
-                    {date:new Date(2021, 0, 25), weight:96.4, waist:106.5, kCal:0,    slept:true,   },
 
-                    {date:new Date(2021, 0, 27), weight:97.2, waist:105.0, kCal:512,                },
 
-                    {date:new Date(2021, 1, 1),  weight:99.1, waist:108.0, kCal:1150, slept:false,  },
-                    {date:new Date(2021, 1, 2),  weight:99.0, waist:107.5,            slept:true,   },
-                    
-                    {date:new Date(2021, 1, 4),                            kCal:666                 },
-                    {date:new Date(2021, 1, 5),  weight:98.9, waist:107.0,            slept:false,  },
-            ];
+export default function HealthStats() {
+        const userInfo = { name:"Mike", height:175, dob:new Date(1989, 0, 31), 
+        maxBpm: 188, weightGoal:85.0, waistGoal:95.5, dateGoal:new Date(2021,6,1) };
 
-console.log(JSON.stringify(stats));
+        const stats = [  
+     {date:new Date(2021, 0, 25), weight:96.4, waist:106.5, kCal:0,    slept:true,   },
+
+     {date:new Date(2021, 0, 27), weight:97.2, waist:105.0, kCal:512,                },
+
+     {date:new Date(2021, 1, 1),  weight:99.1, waist:108.0, kCal:1150, slept:false,  },
+     {date:new Date(2021, 1, 2),  weight:99.0, waist:107.5,            slept:true,   },
+     
+     {date:new Date(2021, 1, 4),                            kCal:666                 },
+     {date:new Date(2021, 1, 5),  weight:98.9, waist:107.0,            slept:false,  },
+];        
+        //printing to the console strigifying the json data
+        console.log(JSON.stringify(userInfo))
+        console.log(JSON.stringify(stats))
+        const today = new Date();
+        const daysToGoals = () => {
+               let differenceInTime =  userInfo.dateGoal.getTime() - today.getTime();
+               let remaining_days = differenceInTime / (1000*3600*24); 
+               return remaining_days.toFixed(0);
+        }
+
+        const newTarget =(weight, waist) =>  {
+               let lose_weight =  weight -userInfo.weightGoal ;
+               let lose_waist = waist -userInfo.waistGoal ;
+               console.log('you need to lose ' + lose_weight.toFixed(2)+ 'kg weight');
+               console.log('you need to lose ' + lose_waist.toFixed(2) + 'cm waist');
+               return (
+                       <div>
+                       <li>`current weight = ${weight}, you need to lose weight = ${lose_weight}` </li>
+                       <li>`current weight = ${waist}, you need to lose weight = ${lose_waist}` </li>
+                       </div>
+                       )
+        }
+
+        const newData = ()  => {
+                return <li>hi</li>
+        }
+        //console.log(stats.map(stats => stats.weight));
+        const dailyReport = () => {
+                stats.map(stats => {
+                let weight = stats.weight;
+                let waist = stats.waist;
+                console.log(waist)
+                return newTarget(weight, waist);
+                }
+                 );
+        }
+
+        console.log(daysToGoals())
+
+        return (
+                <div>
+                 <h2> {userInfo.name} Here is your statistics </h2>
+                 <li>{daysToGoals()} days remaining to meet the goal</li>
+                {dailyReport()}
+                
+                </div>
+        )
+}
+
 
 // Tasks: 
 
